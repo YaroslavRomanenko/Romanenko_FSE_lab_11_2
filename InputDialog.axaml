@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:Romanenko_FSE_lab11_2_a" 
+        mc:Ignorable="d"
+        d:DesignWidth="300"
+        d:DesignHeight="150"
+        x:Class="Romanenko_FSE_lab11_2_a.InputDialog"
+        x:DataType="local:InputDialog"
+        Title="{Binding Title}"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+
+    <!-- Rest of your InputDialog content -->
+    <StackPanel Margin="15">
+        <TextBlock Text="{Binding Prompt}" Margin="0,0,0,10" TextWrapping="Wrap"/>
+        <TextBox x:Name="InputTextBox" Watermark="Enter value here" Width="250" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+            <Button Content="OK" Click="OkButton_Click" IsDefault="True"/>
+            <Button Content="Cancel" Click="CancelButton_Click" IsCancel="True"/>
+        </StackPanel>
+    </StackPanel>
+
+</Window>
+
+    
