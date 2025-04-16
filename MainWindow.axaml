@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="566" d:DesignHeight="468"
+        x:Class="Romanenko_FSE_lab11_2_a.MainWindow"
+        Title="MainWindow"
+        Width="566" Height="468">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <Menu Grid.Row="0">
+      <MenuItem Header="File">
+        <MenuItem Header="Open File" Click="TsmiOpenFile_Click"/>
+        <MenuItem Header="Load News" Click="TsmiLoadNews_Click"/>
+      </MenuItem>
+      <MenuItem Header="Edit">
+        <MenuItem Header="Format" Click="TsmiFormat_Click"/>
+        <MenuItem Header="Search by initials" Click="TsmiSearchByInitials_Click"/>
+        <MenuItem Header="Find the mailing address" Click="TsmiFindTheMailingAddress_Click"/>
+        <MenuItem Header="Search for mobile numbers" Click="TsmiSearchForMobileNumbers_Click"/>
+        <MenuItem Header="Find the most frequent words in Latin" Click="TsmiFindTheMostFreqWordsLatin_Click"/>
+        <MenuItem Header="Replace a sequence of letters with another" Click="TsmiReplaceSeqLettersWithAnother_Click"/>
+        <MenuItem Header="Search by letter sequence" Click="TsmiSearchByLetterSequence_Click"/>
+      </MenuItem>
+      <MenuItem Header="About">
+        <MenuItem Header="Details" Click="TsmiDetails_Click"/>
+      </MenuItem>
+    </Menu>
+
+    <TextBlock Grid.Row="1" Text="Output File" Margin="12,10,0,0" 
+               FontSize="12" VerticalAlignment="Center"/>
+    
+    <TextBox Grid.Row="2" x:Name="TxtFilename" IsReadOnly="True" 
+             Margin="12,5,12,10" VerticalAlignment="Stretch"/>
+    
+    <TextBox Grid.Row="3" x:Name="TxtSource" AcceptsReturn="True" 
+             IsReadOnly="True" Margin="12,0,12,12"
+             TextWrapping="NoWrap"/>
+  </Grid>
+</Window>

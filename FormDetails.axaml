@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="371" d:DesignHeight="426"
+        x:Class="Romanenko_FSE_lab11_2_a.FormDetails"
+        Title="FormDetails"
+        Width="371" Height="426"
+        CanResize="False">
+    
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Size (kB):" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="lblShowSize" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Symbol Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="lblShowSymCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Paragraph Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="lblShowParCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Empty Row Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="lblShowEmptyRowCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Author Page Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="lblShowAuthorPageCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Vowel in Cyrillic Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="lblShowVolCyrillicCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Consonants in Cyrillic Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="lblShowConCyrillicCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Vowel in Latin Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" x:Name="lblShowVolLatinCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Consonants in Latin Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" x:Name="lblShowConLatinCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="Number Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" x:Name="lblShowNumCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="Special Symbols Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="10" Grid.Column="1" x:Name="lblShowSpecSymCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+
+        <TextBlock Grid.Row="11" Grid.Column="0" Text="Punctuation Mark Count: " FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+        <TextBlock Grid.Row="11" Grid.Column="1" x:Name="lblShowPunctMarkCount" Text="0" FontSize="9" VerticalAlignment="Center" Margin="0,11,0,11"/>
+    </Grid>
+</Window>
