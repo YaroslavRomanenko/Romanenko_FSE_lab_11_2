@@ -20,7 +20,6 @@ using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System.Diagnostics;
 
-
 namespace Romanenko_FSE_lab11_2_a
 {
     public class Data
@@ -44,7 +43,6 @@ namespace Romanenko_FSE_lab11_2_a
         private FormDetails? formDetails = null;
         private FormListBoxResult? formListBoxResult = null;
         private FormTextBoxResult? formTextBoxResult = null;
-
         private Data data = new Data();
 
         public MainWindow()
@@ -57,14 +55,12 @@ namespace Romanenko_FSE_lab11_2_a
                 return;
             }
 
-            TxtSource.TextInput += Logger.Instance.OnTextInput;
-            TxtSource.KeyDown += Logger.Instance.OnKeyDown;
+            TxtSource.KeyUp += Logger.Instance.OnKeyUp;
 
             Dispatcher.UIThread.Post(() =>
             {
                 TxtSource.Focus();
-                Console.WriteLine($"Attempted to set focus to TxtSource. IsFocused: {TxtSource.IsFocused}");
-            }, DispatcherPriority.Background);
+            }, DispatcherPriority.Input);
         }
 
         private void InitializeComponent()
@@ -72,7 +68,6 @@ namespace Romanenko_FSE_lab11_2_a
             AvaloniaXamlLoader.Load(this);
             TxtFilename = this.FindControl<TextBox>("TxtFilename");
             TxtSource = this.FindControl<TextBox>("TxtSource");
-
             this.Closing += MainWindow_Closing;
         }
 
@@ -139,46 +134,23 @@ namespace Romanenko_FSE_lab11_2_a
                 TxtSource.IsReadOnly = true;
                 string lowerText = content.ToLower();
 
-                // Size
                 data.fileSizeInKiloBytes = Math.Round(fileSizeInBytes / 1024.0, 4);
-
-                // Symbols Count
                 data.symCount = content.Length;
-
-                // Paragraph Count
                 string[] paragraphs = content.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
                 data.paragraphCount = paragraphs.Length;
-
-                // Empty Row Count
                 string[] emptyRows = content.Split(new[] { "\r\n" }, StringSplitOptions.None);
                 data.emptyRowCount = emptyRows.Length - data.paragraphCount;
-
-                // Author Page Count
                 data.authorPageCount = data.symCount / 1800;
-
-                // Vowel in Cyrillic Count
                 string vowelsCyrillic = "аеёиоуыэюяіїє";
                 data.vowelCyrillicCount = lowerText.Count(sym => vowelsCyrillic.Contains(sym));
-
-                // Consonants in Cyrillic Count
                 string consonantsCyrillic = "бвгджзйклмнпрстфхцчшщьъ";
                 data.consonantCyrillicCount = lowerText.Count(sym => consonantsCyrillic.Contains(sym));
-
-                // Vowel in Latin Count
                 string vowelsLatin = "aeiou";
                 data.vowelLatinCount = lowerText.Count(sym => vowelsLatin.Contains(sym));
-
-                // Consonant in Latin Count
                 string consonantsLatin = "bcdfghjklmnpqrstvwxyz";
                 data.consonantLatinCount = lowerText.Count(sym => consonantsLatin.Contains(sym));
-
-                // Number Count
                 data.numberCount = lowerText.Count(sym => Regex.IsMatch(sym.ToString(), @"\d"));
-
-                // Special Symbol Count
                 data.specialSymCount = lowerText.Count(sym => !char.IsLetterOrDigit(sym) && !char.IsWhiteSpace(sym) && !char.IsPunctuation(sym));
-
-                // Punctuation Mark Count
                 data.punctuationMarkCount = lowerText.Count(char.IsPunctuation);
             }
             catch (IOException ioEx)
@@ -206,7 +178,6 @@ namespace Romanenko_FSE_lab11_2_a
                 formDetails.Close();
             }
 
-            // Initialization
             formDetails = new FormDetails();
             formDetails.SetAllData(data);
             formDetails.Show();
@@ -216,7 +187,6 @@ namespace Romanenko_FSE_lab11_2_a
         {
             if (await IsTextFieldEmptyAsync(TxtSource.Text)) return;
 
-            // Clean The Text
             string cleanedInput = Regex.Replace(TxtSource.Text, @" {2,}", " ");
             cleanedInput = Regex.Replace(cleanedInput, @"\t{2,}", "\t");
             cleanedInput = Regex.Replace(cleanedInput, @"(\r\n){2,}", "\r\n");
@@ -421,31 +391,39 @@ namespace Romanenko_FSE_lab11_2_a
 
                 int newsToProcess = (amountOfNews == 0 || amountOfNews > totalNewsCount) ? totalNewsCount : amountOfNews;
 
-                TxtSource.IsReadOnly = false;
-                TxtSource.Text = string.Empty;
-
-                foreach (var node in newsNodes)
+                if (TxtSource != null)
                 {
-                    if (amountOfNews > 0 && count >= amountOfNews)
-                        break;
-
-                    var heading = node.SelectSingleNode(".//div[@class='znu-2016-new-img-list-info']//h4/a");
-                    var paragraph = node.SelectSingleNode(".//div[@class='znu-2016-new-img-list-info']//div[@class='text']/p[1]");
-
-                    if (heading != null)
+                    StringBuilder newsBuilder = new StringBuilder();
+                    foreach (var node in newsNodes)
                     {
-                        string header = WebUtility.HtmlDecode(heading.InnerText.Trim());
-                        string par = paragraph is not null ? WebUtility.HtmlDecode(paragraph.InnerText.Trim()) : "There's no annotation";
+                        if (amountOfNews > 0 && count >= amountOfNews)
+                            break;
 
-                        count++;
-                        TxtSource.Text += "------------------------" + Environment.NewLine;
-                        TxtSource.Text += $"News #{count}" + Environment.NewLine;
-                        TxtSource.Text += "------------------------" + Environment.NewLine;
-                        TxtSource.Text += $"{header}" + Environment.NewLine;
-                        TxtSource.Text += "------------------------" + Environment.NewLine;
-                        TxtSource.Text += $"{par}" + Environment.NewLine;
-                        TxtSource.Text += Environment.NewLine;
+                        var heading = node.SelectSingleNode(".//div[@class='znu-2016-new-img-list-info']//h4/a");
+                        var paragraph = node.SelectSingleNode(".//div[@class='znu-2016-new-img-list-info']//div[@class='text']/p[1]");
+
+                        if (heading != null)
+                        {
+                            string header = WebUtility.HtmlDecode(heading.InnerText.Trim());
+                            string par = paragraph is not null ? WebUtility.HtmlDecode(paragraph.InnerText.Trim()) : "There's no annotation";
+
+                            count++;
+                            newsBuilder.AppendLine("------------------------");
+                            newsBuilder.AppendLine($"News #{count}");
+                            newsBuilder.AppendLine("------------------------");
+                            newsBuilder.AppendLine($"{header}");
+                            newsBuilder.AppendLine("------------------------");
+                            newsBuilder.AppendLine($"{par}");
+                            newsBuilder.AppendLine();
+                        }
                     }
+                    TxtSource.Text = newsBuilder.ToString();
+                    TxtSource.IsReadOnly = false;
+
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        TxtSource.Focus();
+                    }, DispatcherPriority.Input);
                 }
 
                 TxtFilename.Text = url;
@@ -456,6 +434,7 @@ namespace Romanenko_FSE_lab11_2_a
                 await ShowMessageAsync("Error!", $"An error occurred: {ex.Message}");
             }
         }
+
 
         private async Task<string> DownloadHtmlCodeAsync(string url)
         {
@@ -476,13 +455,24 @@ namespace Romanenko_FSE_lab11_2_a
 
         private void MainWindow_Closing(object? sender, CancelEventArgs e)
         {
-            if (File.Exists(Logger.FilePath))
+            string? logPath = Logger.Instance.FilePath;
+            if (logPath != null && File.Exists(logPath))
             {
-                File.Delete(Logger.FilePath);
+                try
+                {
+                    File.Delete(logPath);
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine($"Could not delete log file {logPath}: {ex.Message}");
+                }
+                catch (UnauthorizedAccessException uaEx)
+                {
+                    Console.WriteLine($"No permission to delete log file {logPath}: {uaEx.Message}");
+                }
             }
         }
 
-        // Helper Methods for Avalonia-compatible dialogs
         private Task ShowMessageAsync(string title, string message)
         {
             return Dispatcher.UIThread.InvokeAsync(() =>
@@ -495,7 +485,7 @@ namespace Romanenko_FSE_lab11_2_a
         private async Task<string> ShowInputDialogAsync(string prompt, string title)
         {
             var dialog = new InputDialog(prompt, title);
-            return await dialog.ShowDialog<string>(this);
+            return await dialog.ShowDialog<string>(this) ?? string.Empty;
         }
     }
 }
